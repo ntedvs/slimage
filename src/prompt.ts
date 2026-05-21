@@ -4,7 +4,7 @@ import { Writable } from "node:stream"
 export async function promptSecret(message: string): Promise<string> {
   if (!process.stdin.isTTY) {
     throw new Error(
-      "No TTY available; cannot prompt for a key. Pass it via stdin redirect is unsupported — use TINIFY_KEY env var instead.",
+      "No TTY available; cannot prompt for a key. Pass it via stdin redirect is unsupported - use TINIFY_KEY env var instead.",
     )
   }
 

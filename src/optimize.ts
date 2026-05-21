@@ -75,7 +75,7 @@ export async function optimize(opts: OptimizeOptions): Promise<void> {
           const outBuf = Buffer.from(optimized)
 
           if (outBuf.length >= inSize) {
-            // No improvement — still mark so we don't retry.
+            // No improvement - still mark so we don't retry.
             const payload: XattrPayload = {
               v: 1,
               hash,

@@ -1,6 +1,8 @@
-# slimage
+<p align="center">
+  <img src="./slimage.png" alt="slimage" width="500" />
+</p>
 
-Slim image — recursively optimize images in a directory using [Tinify](https://tinify.com) (TinyPNG / TinyJPG). Tracks already-optimized files via extended file attributes, so re-running is cheap and idempotent — no sidecar lockfile.
+Slim image - recursively optimize images in a directory using [Tinify](https://tinify.com) (TinyPNG / TinyJPG). Tracks already-optimized files via extended file attributes, so re-running is cheap and idempotent - no sidecar lockfile.
 
 ## Install
 
@@ -24,7 +26,7 @@ Get a free API key at [tinify.com/developers](https://tinify.com/developers) (50
 slimage auth
 ```
 
-You'll be prompted to paste your key — input is hidden, so it doesn't end up in shell history. The key is validated against Tinify, then saved to `~/.config/slimage/config.json` (mode `0600`).
+You'll be prompted to paste your key - input is hidden, so it doesn't end up in shell history. The key is validated against Tinify, then saved to `~/.config/slimage/config.json` (mode `0600`).
 
 Alternatives:
 
@@ -56,9 +58,9 @@ Supported formats: **JPEG, PNG, WebP**. `node_modules`, `.git`, `dist`, `build`,
 
 ## How dedupe works
 
-After each successful optimization, slimage writes an extended attribute named `user.slimage` onto the file containing a content hash and metadata. On the next run, any file whose current hash matches its stored marker is skipped — no API call, no quota burned. Edit the file (which changes its hash) and it'll be picked up again.
+After each successful optimization, slimage writes an extended attribute named `user.slimage` onto the file containing a content hash and metadata. On the next run, any file whose current hash matches its stored marker is skipped - no API call, no quota burned. Edit the file (which changes its hash) and it'll be picked up again.
 
-If extended attributes aren't supported on your filesystem (rare — FAT32, some network mounts), slimage transparently falls back to a per-root cache file at `~/.cache/slimage/<encoded-path>.json`.
+If extended attributes aren't supported on your filesystem (rare - FAT32, some network mounts), slimage transparently falls back to a per-root cache file at `~/.cache/slimage/<encoded-path>.json`.
 
 ### Inspecting the marker
 
