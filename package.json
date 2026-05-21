@@ -1,0 +1,50 @@
+{
+  "name": "slimage",
+  "version": "0.1.0",
+  "description": "Slim image — recursively optimize images in a directory using TinyPNG/Tinify",
+  "keywords": [
+    "cli",
+    "compress",
+    "image",
+    "jpeg",
+    "optimize",
+    "png",
+    "tinify",
+    "tinypng",
+    "webp"
+  ],
+  "homepage": "https://github.com/ntedvs/slimage#readme",
+  "bugs": "https://github.com/ntedvs/slimage/issues",
+  "license": "MIT",
+  "author": "Nathaniel Davis (https://ntedvs.com)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ntedvs/slimage.git"
+  },
+  "bin": {
+    "slimage": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "dev": "bun src/index.ts",
+    "prepublishOnly": "bun run build"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "p-limit": "^6.1.0",
+    "tinify": "^1.8.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
