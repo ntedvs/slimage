@@ -1,6 +1,6 @@
 {
   "name": "slimage",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Slim image - recursively optimize images in a directory using TinyPNG/Tinify",
   "keywords": [
     "cli",
