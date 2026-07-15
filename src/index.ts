@@ -17,6 +17,7 @@ program
   .command("auth")
   .description("Prompt for and save your Tinify API key")
   .action(async () => {
+    console.log("Get your Tinify API key at https://tinify.com/developers")
     const key = await promptSecret("Tinify API key (input hidden): ")
     if (!key) {
       console.error("no key entered, aborting.")
