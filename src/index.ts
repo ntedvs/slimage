@@ -39,15 +39,15 @@ program
 
 program
   .command("optimize", { isDefault: true })
-  .description("Recursively optimize images in a directory")
-  .argument("[dir]", "directory to optimize", ".")
+  .description("Optimize an image or recursively optimize a directory")
+  .argument("[path]", "image or directory to optimize", ".")
   .option("-k, --key <key>", "Tinify API key (overrides env and config)")
   .option("-c, --concurrency <n>", "parallel requests", (v) => parseInt(v, 10), 5)
   .option("--dry-run", "list files that would be optimized", false)
   .option("--force", "re-optimize even if previously marked", false)
   .action(
     async (
-      dir: string,
+      path: string,
       opts: { key?: string; concurrency: number; dryRun: boolean; force: boolean },
     ) => {
       const apiKey = await resolveApiKey(opts.key)
@@ -56,7 +56,7 @@ program
         process.exit(1)
       }
       await optimize({
-        dir: resolve(dir),
+        target: resolve(path),
         apiKey,
         concurrency: opts.concurrency,
         dryRun: opts.dryRun,

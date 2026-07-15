@@ -1,9 +1,9 @@
 import { readFile, stat, writeFile } from "node:fs/promises"
 import { createHash } from "node:crypto"
-import { relative } from "node:path"
+import { dirname, relative } from "node:path"
 import pLimit from "p-limit"
 import tinify from "tinify"
-import { walk } from "./walk.js"
+import { isSupported, walk } from "./walk.js"
 import { createMarker, type XattrPayload } from "./xattr.js"
 
 async function sha256(path: string): Promise<string> {
@@ -23,7 +23,7 @@ function fmtBytes(n: number): string {
 }
 
 export interface OptimizeOptions {
-  dir: string
+  target: string
   apiKey: string
   concurrency: number
   dryRun: boolean
@@ -33,7 +33,17 @@ export interface OptimizeOptions {
 export async function optimize(opts: OptimizeOptions): Promise<void> {
   tinify.key = opts.apiKey
 
-  const marker = await createMarker(opts.dir)
+  const targetStat = await stat(opts.target)
+  if (!targetStat.isFile() && !targetStat.isDirectory()) {
+    throw new Error(`not a file or directory: ${opts.target}`)
+  }
+  if (targetStat.isFile() && !isSupported(opts.target)) {
+    throw new Error(`unsupported image format: ${opts.target}`)
+  }
+
+  const root = targetStat.isDirectory() ? opts.target : dirname(opts.target)
+  const files = targetStat.isDirectory() ? walk(opts.target) : [opts.target]
+  const marker = await createMarker(root)
   if (marker.usingFallback) {
     console.log("note: xattrs unavailable, using local cache file in ~/.cache/slimage")
   }
@@ -47,10 +57,10 @@ export async function optimize(opts: OptimizeOptions): Promise<void> {
   let skipped = 0
   let failed = 0
 
-  for await (const file of walk(opts.dir)) {
+  for await (const file of files) {
     tasks.push(
       limit(async () => {
-        const rel = relative(opts.dir, file)
+        const rel = relative(root, file)
         try {
           const hash = await sha256(file)
 

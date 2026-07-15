@@ -2,7 +2,7 @@
   <img src="./slimage.png" alt="slimage" width="500" />
 </p>
 
-Slim image - recursively optimize images in a directory using [Tinify](https://tinify.com) (TinyPNG / TinyJPG). Tracks already-optimized files via extended file attributes, so re-running is cheap and idempotent - no sidecar lockfile.
+Slim image - optimize a specific image or recursively optimize a directory using [Tinify](https://tinify.com) (TinyPNG / TinyJPG). Tracks already-optimized files via extended file attributes, so re-running is cheap and idempotent - no sidecar lockfile.
 
 ## Install
 
@@ -43,6 +43,9 @@ slimage
 
 # specific directory
 slimage ./public
+
+# specific image
+slimage ./public/hero.png
 
 # preview without uploading
 slimage --dry-run
